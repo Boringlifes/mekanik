@@ -1,0 +1,378 @@
+ <!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hållfasthet och Mekanik</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #35424a;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            background: #ffffff;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #35424a;
+            color: #ffffff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #35424a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .back-to-top:hover {
+            background: #2c3e50;
+        }
+
+        @media (max-width: 600px) {
+            nav ul li {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hållfasthet och Mekanik</h1>
+        <nav>
+            <ul>
+                <li><a href="#kraft">Kraft</a></li>
+                <li><a href="#moment">Moment</a></li>
+                <li><a href="#material">Materialegenskaper</a></li>
+                <li><a href="#vinklar">Vinklar</a></li>
+                <li><a href="#tryck">Tryck</a></li>
+                <li><a href="#toejning">Töjningsmodul</a></li>
+                <li><a href="#spanning">Spänning</a></li>
+                <li><a href="#tojning">Töjning</a></li>
+                <li><a href="#maskinelement">Maskinelement</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="kraft">
+            <h2>Kraft</h2>
+            <p>Kraft är en vektor som orsakar en förändring i rörelse eller form av ett objekt. Enheten för kraft är Newton (N).</p>
+            <button onclick="showForceInfo()">Läs mer om kraft</button>
+            <p id="force-info" style="display:none;">Kraft kan beskrivas med Newtons andra lag: F = m * a, där F är kraft, m är massa och a är acceleration.</p>
+        </section>
+
+        <section id="moment">
+            <h2>Moment</h2>
+            <p>Moment är en kraft som orsakar rotation kring en punkt. Enheten för moment är Newtonmeter (Nm).</p>
+            <button onclick="calculateMoment()">Beräkna moment</button>
+            <div id="moment-inputs">
+                <input type="number" id="moment-force" placeholder="Ange kraft (N)" required>
+                <input type="number" id="moment-distance" placeholder="Ange avstånd (m)" required>
+            </div>
+            <div id="moment-steps" class="result"></div>
+        </section>
+
+        <section id="material">
+            <h2>Materialegenskaper</h2>
+            <p>Materialegenskaper som hållfasthet, elasticitet och duktilitet är avgörande för ingenjörsdesign.</p>
+        </section>
+
+        <section id="vinklar">
+            <h2>Vinklar</h2>
+            <p>Vinklar mäts i grader eller radianer. För att beräkna vinklar i trianglar kan man använda trigonometriska funktioner.</p>
+            <button onclick="calculateAngle()">Beräkna vinkel</button>
+            <div id="angle-inputs">
+                <input type="number" id="angle-opposite" placeholder="Motsatt sida (m)" required>
+                <input type="number" id="angle-hypotenuse" placeholder="Hypotenusa (m)" required>
+            </div>
+            <div id="angle-steps" class="result"></div>
+            <canvas id="triangleCanvas" width="300" height="200" style="border:1px solid #000;"></canvas>
+        </section>
+
+        <section id="tryck">
+            <h2>Tryck</h2>
+            <p>Tryck definieras som kraft per ytenhet. Enheten för tryck är Pascal (Pa).</p>
+            <button onclick="calculatePressure()">Beräkna tryck</button>
+            <div id="pressure-inputs">
+                <input type="number" id="pressure-force" placeholder="Ange kraft (N)" required>
+                <input type="number" id="pressure-area" placeholder="Ange yta (m²)" required>
+            </div>
+            <div id="pressure-steps" class="result"></div>
+        </section>
+
+        <section id="toejning">
+            <h2>Töjningsmodul</h2>
+            <p>Töjningsmodulen (E) är ett mått på ett materials styvhet och definieras som förhållandet mellan spänning och töjning.</p>
+            <button onclick="showModulusInfo()">Läs mer om töjningsmodul</button>
+            <p id="modulus-info" style="display:none;">Töjningsmodulen beräknas med formeln: E = σ / ε, där σ är spänning och ε är töjning.</p>
+        </section>
+
+        <section id="spanning">
+            <h2>Spänning</h2>
+            <p>Spänning (σ) definieras som kraft per ytenhet. Formeln är σ = F / A, där F är kraft och A är yta.</p>
+            <button onclick="calculateStress()">Beräkna spänning</button>
+            <div id="stress-inputs">
+                <input type="number" id="stress-force" placeholder="Ange kraft (N)" required>
+                <input type="number" id="stress-area" placeholder="Ange yta (m²)" required>
+            </div>
+            <div id="stress-steps" class="result"></div>
+        </section>
+
+        <section id="tojning">
+            <h2>Töjning</h2>
+            <p>Töjning (ε) definieras som förändring i längd dividerat med ursprunglig längd. Formeln är ε = ΔL / L₀.</p>
+            <button onclick="calculateStrain()">Beräkna töjning</button>
+            <div id="strain-inputs">
+                <input type="number" id="strain-deltaLength" placeholder="Förändring i längd (m)" required>
+                <input type="number" id="strain-originalLength" placeholder="Ursprunglig längd (m)" required>
+            </div>
+            <div id="strain-steps" class="result"></div>
+        </section>
+
+        <section id="maskinelement">
+            <h2>Maskinelement</h2>
+            <p>Här är några grundläggande formler för maskinelement:</p>
+            <h3>Axlar</h3>
+            <p>Spänning i en axel: σ = M / W, där M är moment och W är tvärsnittsmodul.</p>
+            <button onclick="calculateAxleStress()">Beräkna spänning i axel</button>
+            <div id="axle-inputs">
+                <input type="number" id="axle-moment" placeholder="Ange moment (Nm)" required>
+                <input type="number" id="axle-sectionModulus" placeholder="Ange tvärsnittsmodul (m³)" required>
+            </div>
+            <div id="axle-stress-steps" class="result"></div>
+
+            <h3>Kugghjul</h3>
+            <p>Tryckkraft i ett kugghjul: F = (P * π * d) / 60, där P är effekt (W) och d är kugghjulets diameter (m).</p>
+            <button onclick="calculateGearForce()">Beräkna tryckkraft i kugghjul</button>
+            <div id="gear-inputs">
+                <input type="number" id="gear-power" placeholder="Ange effekt (W)" required>
+                <input type="number" id="gear-diameter" placeholder="Ange diameter (m)" required>
+            </div>
+            <div id="gear-force-steps" class="result"></div>
+
+            <h3>Fjädrar</h3>
+            <p>Fjäderkraft: F = k * x, där k är fjäderkonstanten och x är deformationen.</p>
+            <button onclick="calculateSpringForce()">Beräkna fjäderkraft</button>
+            <div id="spring-inputs">
+                <input type="number" id="spring-constant" placeholder="Ange fjäderkonstant (N/m)" required>
+                <input type="number" id="spring-deformation" placeholder="Ange deformation (m)" required>
+            </div>
+            <div id="spring-force-steps" class="result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Ingenjörsresurs. Alla rättigheter förbehållna.</p>
+    </footer>
+
+    <button class="back-to-top" onclick="scrollToTop()">Tillbaka till toppen</button>
+
+    <script>
+        function showForceInfo() {
+            const info = document.getElementById('force-info');
+            info.style.display = info.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function calculateMoment() {
+            const force = parseFloat(document.getElementById('moment-force').value);
+            const distance = parseFloat(document.getElementById('moment-distance').value);
+            if (isNaN(force) || isNaN(distance)) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const moment = force * distance;
+            const steps = `Beräkning av moment:\n1. Kraft (F) = ${force} N\n2. Avstånd (d) = ${distance} m\n3. Moment (M) = F * d = ${force} * ${distance} = ${moment.toFixed(2)} Nm`;
+            document.getElementById('moment-steps').innerText = steps;
+        }
+
+        function drawTriangle(opposite, hypotenuse) {
+            const canvas = document.getElementById('triangleCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Rensa canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Beräkna den närliggande sidan med Pythagoras
+            const adjacent = Math.sqrt(hypotenuse * hypotenuse - opposite * opposite);
+            
+            // Rita triangeln
+            ctx.beginPath();
+            ctx.moveTo(50, 150); // Startpunkt (vänster nedre hörn)
+            ctx.lineTo(50, 150 - opposite); // Motsatt sida
+            ctx.lineTo(50 + adjacent, 150); // Närliggande sida
+            ctx.closePath();
+            
+            ctx.fillStyle = 'rgba(173, 216, 230, 0.5)'; // Ljusblå färg
+            ctx.fill();
+            ctx.stroke();
+            
+            // Lägg till etiketter
+            ctx.fillStyle = 'black';
+            ctx.fillText('Hypotenusa', 100, 100); // Hypotenusa
+            ctx.fillText('Motsatt', 50 - 30, 150 - opposite / 2); // Motsatt sida
+            ctx.fillText('Närliggande', 50 + adjacent / 2, 160); // Närliggande sida
+        }
+
+        function calculateAngle() {
+            const opposite = parseFloat(document.getElementById('angle-opposite').value);
+            const hypotenuse = parseFloat(document.getElementById('angle-hypotenuse').value);
+            if (isNaN(opposite) || isNaN(hypotenuse) || hypotenuse <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const angleInRadians = Math.asin(opposite / hypotenuse);
+            const angleInDegrees = angleInRadians * (180 / Math.PI);
+            const steps = `Beräkning av vinkel:\n1. Motsatt sida = ${opposite} m\n2. Hypotenusa = ${hypotenuse} m\n3. Vinkel (θ) = arcsin(motsatt/hypotenusa) = arcsin(${opposite}/${hypotenuse}) = ${angleInDegrees.toFixed(2)} grader`;
+            document.getElementById('angle-steps').innerText = steps;
+
+            // Rita triangeln
+            drawTriangle(opposite, hypotenuse);
+        }
+
+        function calculatePressure() {
+            const force = parseFloat(document.getElementById('pressure-force').value);
+            const area = parseFloat(document.getElementById('pressure-area').value);
+            if (isNaN(force) || isNaN(area) || area <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const pressure = force / area;
+            const steps = `Beräkning av tryck:\n1. Kraft (F) = ${force} N\n2. Yta (A) = ${area} m²\n3. Tryck (P) = F / A = ${force} / ${area} = ${pressure.toFixed(2)} Pa`;
+            document.getElementById('pressure-steps').innerText = steps;
+        }
+
+        function showModulusInfo() {
+            const info = document.getElementById('modulus-info');
+            info.style.display = info.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function calculateStress() {
+            const force = parseFloat(document.getElementById('stress-force').value);
+            const area = parseFloat(document.getElementById('stress-area').value);
+            if (isNaN(force) || isNaN(area) || area <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const stress = force / area;
+            const steps = `Beräkning av spänning:\n1. Kraft (F) = ${force} N\n2. Yta (A) = ${area} m²\n3. Spänning (σ) = F / A = ${force} / ${area} = ${stress.toFixed(2)} Pa`;
+            document.getElementById('stress-steps').innerText = steps;
+        }
+
+        function calculateStrain() {
+            const deltaLength = parseFloat(document.getElementById('strain-deltaLength').value);
+            const originalLength = parseFloat(document.getElementById('strain-originalLength').value);
+            if (isNaN(deltaLength) || isNaN(originalLength) || originalLength <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const strain = deltaLength / originalLength;
+            const steps = `Beräkning av töjning:\n1. Förändring i längd (ΔL) = ${deltaLength} m\n2. Ursprunglig längd (L₀) = ${originalLength} m\n3. Töjning (ε) = ΔL / L₀ = ${deltaLength} / ${originalLength} = ${strain.toFixed(4)}`;
+            document.getElementById('strain-steps').innerText = steps;
+        }
+
+        function calculateAxleStress() {
+            const moment = parseFloat(document.getElementById('axle-moment').value);
+            const sectionModulus = parseFloat(document.getElementById('axle-sectionModulus').value);
+            if (isNaN(moment) || isNaN(sectionModulus) || sectionModulus <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const stress = moment / sectionModulus;
+            const steps = `Beräkning av spänning i axel:\n1. Moment (M) = ${moment} Nm\n2. Tvärsnittsmodul (W) = ${sectionModulus} m³\n3. Spänning (σ) = M / W = ${moment} / ${sectionModulus} = ${stress.toFixed(2)} Pa`;
+            document.getElementById('axle-stress-steps').innerText = steps;
+        }
+
+        function calculateGearForce() {
+            const power = parseFloat(document.getElementById('gear-power').value);
+            const diameter = parseFloat(document.getElementById('gear-diameter').value);
+            if (isNaN(power) || isNaN(diameter) || diameter <= 0) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const force = (power * Math.PI * diameter) / 60;
+            const steps = `Beräkning av tryckkraft i kugghjul:\n1. Effekt (P) = ${power} W\n2. Diameter (d) = ${diameter} m\n3. Tryckkraft (F) = (P * π * d) / 60 = (${power} * π * ${diameter}) / 60 = ${force.toFixed(2)} N`;
+            document.getElementById('gear-force-steps').innerText = steps;
+        }
+
+        function calculateSpringForce() {
+            const springConstant = parseFloat(document.getElementById('spring-constant').value);
+            const deformation = parseFloat(document.getElementById('spring-deformation').value);
+            if (isNaN(springConstant) || isNaN(deformation)) {
+                alert("Vänligen ange giltiga värden.");
+                return;
+            }
+            const force = springConstant * deformation;
+            const steps = `Beräkning av fjäderkraft:\n1. Fjäderkonstant (k) = ${springConstant} N/m\n2. Deformation (x) = ${deformation} m\n3. Fjäderkraft (F) = k * x = ${springConstant} * ${deformation} = ${force.toFixed(2)} N`;
+            document.getElementById('spring-force-steps').innerText = steps;
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Visa "Tillbaka till toppen"-knappen när användaren scrollar ner
+        window.onscroll = function() {
+            const button = document.querySelector('.back-to-top');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
+
+
